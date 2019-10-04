@@ -22,4 +22,16 @@ function printRecord(item){
         cell.innerText = item[key];
         index++;
     }
+    var lastTD = tr.insertCell(index);
+    // lastTD.appendChild(createIcon('fa fa-trash',trash,item.id));
+    // lastTD.appendChild(createIcon('fa fa-trash', trash, item.id));
+    lastTD.appendChild(createIcon('fa fa-trash'));
+    lastTD.appendChild(createIcon('fa fa-edit'));
+}
+function createIcon(className,fn,id){
+    var iTag = document.createElement("i");
+    iTag.className = className;
+    iTag.addEventListener('click',fn);
+    // iTag.setAttribute("data-itemid",id)
+    return iTag;
 }

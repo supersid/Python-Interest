@@ -1,37 +1,94 @@
-window.addEventListener("load",bindEvents);
-function bindEvents(){
-    document.querySelector('#add').addEventListener('click',addRecord);
+window.addEventListener("load", init);
+function init() {
+    bindEvents();
+    totalRecords();
 }
-let count = 0;
-function addRecord(){
-    var item = new Item();
-    for(let key in item){
-        item[key] = document.querySelector('#' + key).value;
+function bindEvents() {
+    document.querySelector("#add").addEventListener("click", addRecord);
+    document.querySelector("#delete").addEventListener("click", deleteRecord);
+}
 
+function addRecord() {
+    var item = new Items();
+    for (let key in item) {
+        if (key == "marked") {
+            continue;
+        }
+
+        item[key] = document.querySelector("#" + key).value;
     }
-    count = count+1;
     itemOperations.add(item);
+    console.log(item);
     printRecord(item);
+    totalRecords();
 }
-function printRecord(item){
-    var tbody = document.querySelector('#item');
-    var tr = tbody.insertRow();
-    var index = 0;
-    for(let key in item){
-        let cell = tr.insertCell(index);
+function printRecord(item) {
+    var tb = document.querySelector("#tbody");
+    var tr = tb.insertRow();
+    var idx = 0;
+    for (let key in item) {
+        if (key == "marked")
+            continue;
+        let cell = tr.insertCell(idx);
         cell.innerText = item[key];
-        index++;
+        idx++;
     }
-    var lastTD = tr.insertCell(index);
-    // lastTD.appendChild(createIcon('fa fa-trash',trash,item.id));
-    // lastTD.appendChild(createIcon('fa fa-trash', trash, item.id));
-    lastTD.appendChild(createIcon('fa fa-trash'));
-    lastTD.appendChild(createIcon('fa fa-edit'));
+    let cell = tr.insertCell(idx);
+    cell.appendChild(createIcon("fas fa-trash-alt", trash, item.id));
+    cell.appendChild(createIcon("fas fa-edit", edit, item.id));
+    // cell.appendChild('<i class="fas fa-trash-alt"></i>');
+    // cell.appendChild('<i class="fas fa-edit"></i>');
 }
-function createIcon(className,fn,id){
+function createIcon(cl, fn, id) {
     var iTag = document.createElement("i");
-    iTag.className = className;
-    iTag.addEventListener('click',fn);
-    // iTag.setAttribute("data-itemid",id)
+    iTag.className = cl;
+    iTag.addEventListener("click", fn);
+    iTag.setAttribute("iTagID", id);
     return iTag;
 }
+function trash() {
+    let id = this.getAttribute("iTagID");
+    let tr = this.parentNode.parentNode;
+    tr.classList.toggle('alert-danger');
+
+    itemOperations.markUnmark(id);
+    totalRecords();
+}
+var item;
+function edit() {
+    let id = this.getAttribute("iTagID");
+    item = itemOperations.search(id);
+    for (let key in item) {
+        if (key == "marked") {
+            continue;
+        }
+        document.querySelector("#" + key).value = item[key];
+    }
+    console.log(id);
+}
+function totalRecords() {
+    document.querySelector("#total").innerText = "Total TASKS:" + itemOperations.items.length;
+    document.querySelector("#marked").innerText = " Flagged:" + itemOperations.countMarked();
+    document.querySelector("#unmarked").innerText = " Unflagged:" + (itemOperations.items.length - itemOperations.countMarked());
+
+}
+function printTable(items) {
+    var tbody = document.querySelector("tbody");
+    tbody.innerHTML = '';
+    items.forEach(item => printRecord(item));
+}
+function deleteRecord() {
+    var items = itemOperations.remove();
+    printTable(items);
+    totalRecords();
+}
+function searchRecord() {
+    var sb = document.querySelector("#searchbox");
+    sb.classList.toggle('showhide');
+    if (sb.classList.contains('showhide')) {
+        var items = itemOperations.searchAll(document.querySelector("#searchkey").value, document.querySelector("#searchvalue").value);
+        printTable(items);
+        totalRecords();
+    }
+}
+

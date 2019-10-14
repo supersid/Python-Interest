@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assign.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <!-- JavaScript files -->
     <script src="Item.js"></script>
     <script src="itemOperations.js"></script>
@@ -19,69 +20,71 @@
   </head>
   <body>
     <div class="container">
-      <h1 align="center">CRUD App</h1>
-      <div>
-        Id <br>
-        <form>
-          <input id="id" class="a" type="textbox" placeholder="Type Id Here">
-        </form>
-        <br>
-        Name <br>
-        <form>
-          <input id="name" class="a" type="textbox" placeholder="Type Name Here">
-        </form>
-        <br>
-        Price <br>
-        <form>
-          <input id = "price" type="range" class="form-control-range">
-        </form>
-        <br>
-        Desc <br>
-        <form>
-          <textarea class="form-control" id="desc" rows="3" placeholder="Type Desc Here"></textarea>
-        </form>
-        <br>
-        Color <br>
-        <form>
-          <input id = "color" class="a" type="Color" value="black">
-        </form>
-        <br>
-        URL <br>
-        <form>
-          <input id="url" class="a" type="textbox" placeholder="http://sample.com">
-        </form>
-        <br>
-      </div>
-      <div>
-        <button id = "add" type="button" class="btn btn-primary">Add</button>
-        <button type="button" class="btn btn-danger">Delete</button>
-        <button type="button" class="btn btn-info">Search</button>
-        <button type="button" class="btn btn-secondary">Update</button>
-        <button type="button" class="btn btn-success">Save</button>
-        <button type="button" class="btn btn-warning">Load</button>
-        <button type="button" class="btn btn-primary">Sort</button>
-        <button type="button" class="btn btn-info">Load From Server</button>
-        <button type="button" class="btn btn-dark">Clear All</button><br><br>
-      </div>
-      <div>
-        <h3>Total Records Mark Records UnMark Records</h3>
-        <br>
-        <table class="table table-bordered table-dark">
-          <thead>
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Price</th>
-              <th scope="col">Desc</th>
-              <th scope="col">Color</th>
-              <th scope="col">URL</th>
-              <th scope="col">Operations</th>
-            </tr>
-          </thead>
-          <tbody id="item">
-          </tbody>
-        </table>
-      </div>
+        <h1 class="text-center btn-primary">CRUD App</h1>
+        <div class="form-group">
+            <label for="">ID</label>
+            <input id="id" class="form-control" type="text">
+        </div>
+        <div class="form-group">  
+            <label for="">Name</label>
+            <input id="name" class="form-control" type="text" placeholder="Enter Product Name">
+        </div>
+        <div class="form-group">
+            <label for="">Price</label>
+            <input id="price" class="form-control" type="range" min="100" max="1000" name="price" oninput="amount.value=price.value">                                                      
+            <output id="amount" name="amount" for="price">0</output>
+        </div>
+        <div class="form-group">
+            <label for="">Description</label>
+            <textarea id="desc" class="form-control" name="" id="" cols="20" rows="5" placeholder="Enter Product Description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="">Color</label>
+            <input id="color" class="form-control" type="color">
+        </div>
+        <div class="form-group">
+            <label for="">URL</label>
+            <input id="url" class="form-control" type="url" placeholder="http://www.ncuindia.edu">
+        </div>
+        <div>
+            <button id="add" class="btn btn-primary">Add</button>
+            <button id="delete" class="btn btn-danger">Delete</button>
+            <button id="search" class="btn btn-secondary">Search</button>
+            <button id="update" class="btn btn-info">Update</button>
+            <button id="save" class="btn btn-warning">Save</button>
+            <button id="load" class="btn btn-primary">Load</button>
+            <button id="sort" class="btn btn-info">Sort</button>
+            <button id="loadServer" class="btn btn-warning">Load from Server</button>
+            <button class="btn btn-dark">Clear All</button>
+        </div>
+        <div id="searchbox" class="showhide">
+            <select name="searchkey" id="searchkey">
+                <option value="id">ID</option>
+                <option value="name">Name</option>
+                <option value="price">Price</option>
+            </select>
+            <input type="text" id="searchvalue" placeholder="Enter Search Key">
+        </div>
+        <div>
+            <h4><span id="total"></span> <span id="marked"></span> <span id="unmarked"></span></h4>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Color</th>
+                        <th>URL</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
+            </table>
+        </div>
+
     </div>
-  </body>
+</body>
 </html>

@@ -6,6 +6,7 @@ function init() {
 function bindEvents() {
     document.querySelector("#add").addEventListener("click", addRecord);
     document.querySelector("#delete").addEventListener("click", deleteRecord);
+    document.querySelector("#search").addEventListener("click", searchRecord);
 }
 
 function addRecord() {

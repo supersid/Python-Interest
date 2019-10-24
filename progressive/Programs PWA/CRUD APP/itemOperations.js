@@ -15,5 +15,8 @@ const itemOperations = {
     remove() {
         this.items = this.items.filter(itemObject => !itemObject.marked);
         return this.items;
+    },
+    searchAll(key, value) {
+        return this.items.filter(itemObject => itemObject[key] == value);
     }
 }

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+    <html>
+        <body>
+
+            <h1>AJAX Fetch API</h1>
+
+            <button type="button" onclick="loadDoc()">Load users</button>
+
+            <script>
+                function loadDoc() {
+  fetch('https://api.github.com/users').then(res => res.json()).then(data => console.log(data)); 
+
+              }
+</script>
+
+        </body>
+    </html>
